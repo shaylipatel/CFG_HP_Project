@@ -3,7 +3,7 @@ import csv
 import colorama
 from colorama import Fore
 colorama.init(autoreset=True)
-# If not downloaded, install ' pip install colorama ' in terminal
+# Install ' pip install colorama '
 
 player_score = 0
 computer_score = 0
@@ -16,37 +16,56 @@ player_name = input('Enter your name: ')
 round = int(input('How many rounds would you like to play? '))
 
 
-player_house = input('Choose a house: Gryffindor (G), Hufflepuff (H), Ravenclaw (R), Slytherin (S) ')
-if player_house == 'G' or player_house == 'g':
-    player_colour = Fore.RED
-    player_house = 'Gryffindor'
-elif player_house == 'H' or player_house == 'h':
-    player_colour = Fore.YELLOW
-    player_house = "Hufflepuff"
-elif player_house == 'R' or player_house == 'r':
-    player_colour = Fore.BLUE
-    player_house = 'Ravenclaw'
-else:
-    player_colour = Fore.GREEN
-    player_house = 'Slytherin'
+
+def choose_house():
+    player_house = input('Choose a house: Gryffindor (G), Hufflepuff (H), Ravenclaw (R), Slytherin (S) ')
+    if player_house == 'G' or player_house == 'g':
+        player_house = 'Gryffindor'
+    elif player_house == 'H' or player_house == 'h':
+        player_house = "Hufflepuff"
+    elif player_house == 'R' or player_house == 'r':
+        player_house = 'Ravenclaw'
+    else:
+        player_house = 'Slytherin'
+    return player_house
+
+def player_house_colour(player_house):
+    if player_house == 'Gryffindor':
+        player_colour = Fore.RED
+    elif player_house == 'Hufflepuff':
+        player_colour = Fore.YELLOW
+    elif player_house == 'Ravenclaw':
+        player_colour = Fore.BLUE
+    elif player_house == 'Slytherin':
+        player_colour = Fore.GREEN
+    return player_colour
+
+player_house = choose_house()
+player_colour = player_house_colour(player_house)
 
 print(player_colour + 'You are playing for {}!'.format(player_house))
-
 
 houses = ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin']
 opponent_house = random.choice(houses)
 
-if opponent_house == 'Gryffindor':
-    opponent_colour = Fore.RED
-elif opponent_house == 'Hufflepuff':
-    opponent_colour = Fore.YELLOW
-elif opponent_house == 'Ravenclaw':
-    opponent_colour = Fore.BLUE
-elif opponent_house == 'Slytherin':
-    opponent_colour = Fore.GREEN
+def opponent_house_colour ():
+
+    if opponent_house == 'Gryffindor':
+        opponent_colour = Fore.RED
+    elif opponent_house == 'Hufflepuff':
+        opponent_colour = Fore.YELLOW
+    elif opponent_house == 'Ravenclaw':
+        opponent_colour = Fore.BLUE
+    elif opponent_house == 'Slytherin':
+        opponent_colour = Fore.GREEN
+    return opponent_colour
+
+
+opponent_colour = opponent_house_colour()
+
 print(opponent_colour + 'Your opponent is playing for {}.'.format(opponent_house))
 
-def begin_round(player_score, computer_score):
+def begin_round(player_score, computer_score, player_colour, opponent_colour):
     round_winner = 'None'
 
     print(player_colour + 'Your character is: ')
@@ -106,21 +125,18 @@ def begin_round(player_score, computer_score):
         print('Its a draw!')
         round_winner = 'both'
 
-    next_round = input('Press enter to continue! ')
-
     return round_winner
 
 
 for rounds in range(round):
-    round_winner = begin_round(player_score,computer_score)
+    round_winner = begin_round(player_score,computer_score, player_colour, opponent_colour)
     if round_winner == 'player':
         player_score = player_score + 1
     if round_winner == 'opponent':
         computer_score = computer_score + 1
-
     print(player_colour + 'Your score: {}'.format(player_score))
     print(opponent_colour + 'Opponent\'s score: {}'.format(computer_score))
-
+    next_round = input('Press enter to continue! ')
 
 play_again = input('Do you want to play again or exit? ')
 
